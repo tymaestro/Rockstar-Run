@@ -18,8 +18,12 @@ loadSprite('music-note', 'music-note.png')
 loadSprite('beer', 'beer.png')
 // special box item
 loadSprite('guitar', 'guitar.png')
-// floor block')
+// floor block
 loadSprite('block', 'block.png')
+// surprise-box
+loadSprite('surprise-box', 'surprise-box.png')
+// rock
+loadSprite('rock', 'rock.png')
 
 // Game render settings
 scene("game", () => {
@@ -35,6 +39,14 @@ scene("game", () => {
         '                                      ',
         '                                      ',
         '                                      ',
+        '          x                           ',
+        '                             @        ',
+        '                                      ',
+        '                                      ',
+        '                   z                  ',
+        '                                      ',
+        '                                      ',
+        '                                      ',
         '                         ^  ^         ',
         '======================================',
     ]
@@ -47,6 +59,10 @@ scene("game", () => {
         // this is the legend for the sprites and defines the characteristics 
         '=': [sprite('block', solid())],
         '^': [sprite('beer'), solid(), 'dangerous'],
+        '@': [sprite('surprise-box', solid())],
+        'x': [sprite('guitar', solid())],
+        'z': [sprite('music-note', solid())],
+        'y': [sprite('rock', solid())],
 
     }
     // defines the map/s that will be rendered for the level
