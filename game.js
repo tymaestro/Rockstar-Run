@@ -9,9 +9,13 @@ kaboom({
 })
 
 const MOVE_SPEED = 140
-const CURRENT_JUMP_FORCE = 700
+const JUMP_FORCE = 360
 const BIG_JUMP_FORCE = 700
+let CURRENT_JUMP_FORCE = 700
+let score = 0
+const ENEMY_SPEED = 20
 
+let isJumping = true
 // Our sprites (the artwork that makes up the building blocks of the game)
 
 // sets the location of sprite files
@@ -32,6 +36,7 @@ loadSprite('rockstar-girl', 'rockstar-girl.png')
 
 // Game render settings
 scene("game", () => {
+    score,
     layers(['bg', 'obj', 'ui'], 'obj')
 
     // These characters represent the sprites that can be found in legend
@@ -44,7 +49,7 @@ scene("game", () => {
         '                                      ',
         '                                      ',
         '                                      ',
-        '                                     ',
+        '                                      ',
         '                             @        ',
         '                                      ',
         '            !                         ',
@@ -66,8 +71,8 @@ scene("game", () => {
         '^': [sprite('beer'), solid(), 'dangerous'],
         '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
         '!': [sprite('surprise-box'), solid(), 'note-surprise'],
-        'x': [sprite('guitar', solid()), 'guitar', body()],
-        'z': [sprite('music-note', solid()), ],
+        'x': [sprite('guitar'), solid(), 'guitar', body()],
+        'z': [sprite('music-note'), solid(), 'note'],
         // 'y': [sprite('rock', solid())],
 
 
@@ -75,54 +80,19 @@ scene("game", () => {
     // defines the map/s that will be rendered for the level
     const gameLevel = addLevel(map, levelCfg)
 
-    // these are the player settings. we need three of these functions for the three players in an if statement 
-    const player = add([
-        sprite('rockstar-girl'), solid(),
-        pos(30, 0),
-        body(),
-        big(),
-        origin('bot')
-    ])
 
-    // the logic that makes things jump out of boxes
-    player.on("headbump", (obj) => {
-        if (obj.is('note-surprise')) {
-            gameLevel.spawn('z', obj.gridPos.sub(0, 1))
-            destroy(obj)
-            gameLevel.spawn('}', obj.gridPos.sub(0, 0))
-        }
-        if (obj.is('guitar-surprise')) {
-            gameLevel.spawn('x', obj.gridPos.sub(0, 1))
-            destroy(obj)
-            gameLevel.spawn('}', obj.gridPos.sub(0, 0))
-        }
-    })
     // the displayed score in game 
     const scoreText = add([
-        text('I will be the score'),
+        text(score),
         pos(30, 6),
         layer('ui'),
         {
-            value: 'test',
+            value: score,
         }
     ])
 
-    add([text('level' + 'test', pos(4, 6))])
-
-    keyDown('left', () => {
-        player.move(-MOVE_SPEED, 0)
-    })
-
-    keyDown('right', () => {
-        player.move(MOVE_SPEED, 0)
-    })
-
-    keyPress('space', () => {
-        if (player.grounded()) {
-            isJumping = true
-            player.jump(CURRENT_JUMP_FORCE)
-        }
-    })
+    add([text(score + 'test', pos(4, 6))])
+    // the logic that makes things jump out of boxes
 
     // the logic that will allow us to get bigger when we touch a guitar
     function big() {
@@ -154,12 +124,95 @@ scene("game", () => {
             }
         }
     }
+    // these are the player settings. we need three of these functions for the three players in an if statement 
+    const player = add([
+        sprite('rockstar-girl'), solid(),
+        pos(30, 0),
+        body(),
+        big(),
+        origin('bot')
+    ])
+
+
     // makes guitars move when they come out of a box
     action('guitar', (m) => {
-        m.move(20, 0)
+        m.move(25, 0)
+    })
+
+    player.on("headbump", (obj) => {
+        if (obj.is('note-surprise')) {
+            gameLevel.spawn('z', obj.gridPos.sub(0, 1))
+            destroy(obj)
+            gameLevel.spawn('}', obj.gridPos.sub(0, 0))
+        }
+        if (obj.is('guitar-surprise')) {
+            gameLevel.spawn('x', obj.gridPos.sub(0, 1))
+            destroy(obj)
+            gameLevel.spawn('}', obj.gridPos.sub(0, 0))
+        }
+    })
+
+    // when a player hits an item
+    player.collides('guitar', (m) => {
+        destroy(m)
+        player.biggify(6)
+    })
+
+    player.collides('note', (c) => {
+        destroy(c)
+        scoreText.value++
+        scoreText.text = scoreText.value
+    })
+
+
+    action('dangerous', (d) => {
+        d.move(-ENEMY_SPEED, 0)
+    })
+
+    player.collides('dangerous', (d) => {
+        if (isJumping) {
+            destroy(d)
+        } else {
+            go('lose', {
+                score: scoreText.value
+            })
+        }
+    })
+
+    // player controls
+    keyDown('left', () => {
+        player.move(-MOVE_SPEED, 0)
+    })
+
+    keyDown('right', () => {
+        player.move(MOVE_SPEED, 0)
+    })
+
+    player.action(() => {
+        if (player.grounded()) {
+            isJumping = false
+        }
+    })
+
+    keyPress('space', () => {
+        if (player.grounded()) {
+            isJumping = true
+            player.jump(CURRENT_JUMP_FORCE)
+        }
+    })
+
+
+
+
+    scene('lose', ({
+        score
+    }) => {
+        add([text('You scored ' + score, 32), origin('center'), pos(width() / 2, height() / 2)])
     })
 
 })
 
 // guess what this does?
-start('game')
+start("game", {
+    score: 0,
+})
