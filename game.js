@@ -12,6 +12,7 @@ const MOVE_SPEED = 140
 const JUMP_FORCE = 360
 let CURRENT_JUMP_FORCE = 700
 const BIG_JUMP_FORCE = 700
+let score = 0
 
 // Our sprites (the artwork that makes up the building blocks of the game)
 
@@ -33,6 +34,7 @@ loadSprite('rockstar-girl', 'rockstar-girl.png')
 
 // Game render settings
 scene("game", () => {
+    score,
     layers(['bg', 'obj', 'ui'], 'obj')
 
     // These characters represent the sprites that can be found in legend
@@ -100,15 +102,15 @@ scene("game", () => {
     })
     // the displayed score in game 
     const scoreText = add([
-        text('I will be the score'),
+        text(score),
         pos(30, 6),
         layer('ui'),
         {
-            value: 'value',
+            value: score,
         }
     ])
 
-    add([text('level' + 'test', pos(4, 6))])
+    add([text(score + 'test', pos(4, 6))])
 
     // player controls
     keyDown('left', () => {
@@ -176,4 +178,6 @@ scene("game", () => {
 })
 
 // guess what this does?
-start('game')
+start("game", {
+    score: 0,
+})
