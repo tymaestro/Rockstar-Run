@@ -9,6 +9,7 @@ kaboom({
 })
 
 const MOVE_SPEED = 140
+const CURRENT_JUMP_FORCE = 360
 
 // Our sprites (the artwork that makes up the building blocks of the game)
 
@@ -98,6 +99,13 @@ scene("game", () => {
 
     keyDown('right', () => {
         player.move(MOVE_SPEED, 0)
+    })
+
+    keyPress('space', () => {
+        if (player.grounded()) {
+            isJumping = true
+            player.jump(CURRENT_JUMP_FORCE)
+        }
     })
 
 
