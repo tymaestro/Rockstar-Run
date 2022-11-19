@@ -33,6 +33,8 @@ loadSprite('surprise-box', 'surprise-box.png')
 // rock
 // loadSprite('rock', 'rock.png')
 loadSprite('rockstar-girl', 'rockstar-girl.png')
+// background sprite
+loadSprite("bg", "bg.png");
 
 // Game render settings
 scene("game", () => {
@@ -60,6 +62,10 @@ scene("game", () => {
         '                         ^  ^         ',
         '======================================',
     ]
+
+    add([
+        sprite("bg", {width: width(), height: height()})
+      ]);
 
 
     const levelCfg = {
