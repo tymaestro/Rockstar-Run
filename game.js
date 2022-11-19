@@ -13,6 +13,7 @@ const JUMP_FORCE = 360
 const BIG_JUMP_FORCE = 700
 let CURRENT_JUMP_FORCE = 360
 let score = 0
+let level = 0
 const ENEMY_SPEED = 20
 const FALL_DEATH = 400
 
@@ -39,31 +40,64 @@ loadSprite("bg", "bg.png");
 // jump sound effect
 // loadSprite("jump-sound", "jump-sound.mp3");
 
+// temporary pipes
+loadSprite('pipe-top-left', 'ReTPiWY.png')
+loadSprite('pipe-top-right', 'hj2GK4n.png')
+loadSprite('pipe-bottom-left', 'c1cYSbt.png')
+loadSprite('pipe-bottom-right', 'nqQ79eI.png')
+
+
+
 // Game render settings
-scene("game", () => {
-    score,
+scene("game", ({
+    level,
+    score
+}) => {
+
     layers(['bg', 'obj', 'ui'], 'obj')
 
     // These characters represent the sprites that can be found in legend
-    const map = [
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '                             @        ',
-        '                                      ',
-        '            !                         ',
-        '                   z                  ',
-        '                                      ',
-        '       @                              ',
-        '                                      ',
-        '                         ^  ^         ',
-        '======================================',
+    const maps = [
+        [
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                             @        ',
+            '                                      ',
+            '            !                         ',
+            '                   z                  ',
+            '                                      ',
+            '       @                              ',
+            '                                  -+  ',
+            '                         ^  ^     ()   ',
+            '======================================',
+        ],
+        [
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                             @        ',
+            '                                      ',
+            '            !                         ',
+            '                   z                  ',
+            '                                      ',
+            '       @                              ',
+            '                                  -+  ',
+            '                         ^  ^     ()   ',
+            '======================================',
+        ]
     ]
 
     add([
@@ -87,23 +121,29 @@ scene("game", () => {
         'z': [sprite('music-note'), 'note'],
         // 'y': [sprite('rock', solid())],
 
+        // temp pipes
+        '(': [sprite('pipe-bottom-left'), solid(), scale(0.5)],
+        ')': [sprite('pipe-bottom-right'), solid(), scale(0.5)],
+        '-': [sprite('pipe-top-left'), solid(), scale(0.5), 'pipe'],
+        '+': [sprite('pipe-top-right'), solid(), scale(0.5), 'pipe'],
+
 
     }
     // defines the map/s that will be rendered for the level
-    const gameLevel = addLevel(map, levelCfg)
+    const gameLevel = addLevel(maps[level], levelCfg)
 
 
     // the displayed score in game 
     const scoreText = add([
         text(score),
-        pos(30, 6),
+        pos(30, 200),
         layer('ui'),
         {
             value: score,
         }
     ])
 
-    add([text(score, pos(4, 6))])
+    add([text('level ' + parseInt(level + 1)), pos(40, 6)])
     // the logic that makes things jump out of boxes
 
     // the logic that will allow us to get bigger when we touch a guitar
@@ -199,6 +239,16 @@ scene("game", () => {
             })
         }
     })
+
+    // down a pipe
+    player.collides('pipe', () => {
+        keyPress('down', () => {
+            go('game', {
+                level: (level + 1) % maps.length,
+                score: scoreText.value
+            })
+        })
+    })
     // player controls
     keyDown('left', () => {
         player.move(-MOVE_SPEED, 0)
@@ -224,18 +274,24 @@ scene("game", () => {
 
 })
 
+// when you die this screen shows
 scene('lose', ({
     score
 }) => {
     add([text('You scored ' + score + ' Press space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
 
 
+    // restarts the game after death with spacebar 
     keyPress("space", () => {
-        go("game");
+        go("game", {
+            score: 0,
+            level: 0,
+        });
     });
 });
 
 // guess what this does?
 start("game", {
     score: 0,
+    level: 0,
 });
