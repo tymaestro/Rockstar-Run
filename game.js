@@ -41,6 +41,8 @@ loadSprite("bg", "bg.png");
 // loadSprite("jump-sound", "jump-sound.mp3");
 // next level
 loadSprite('limo', 'limo.png')
+loadSound("jump", "jump.wav")
+loadSound("nostalgia", "nostalgia.mp3");
 
 
 
@@ -55,6 +57,11 @@ scene("game", ({
 
     // These characters represent the sprites that can be found in legend
 
+    // play global music
+    const music = play("nostalgia", {
+        volume: 0.8,
+        loop: true
+    })
 
     const maps = [
         [
@@ -224,10 +231,12 @@ scene("game", ({
                 go('game', {
                     level: (level + 1) % maps.length,
                     score: scoreText.value
-            })
-        } else {
-            go("win", { score: scoreText.value })
-        }
+                })
+            } else {
+                go("win", {
+                    score: scoreText.value
+                })
+            }
         })
     })
     // player controls
@@ -248,7 +257,7 @@ scene("game", ({
     keyPress('space', () => {
         if (player.grounded()) {
             isJumping = true;
-
+            play("jump");
             player.jump(CURRENT_JUMP_FORCE);
         }
     })
@@ -291,4 +300,7 @@ scene('lose', ({
 start("game", {
     score: 0,
     level: 0,
+
 });
+
+music.play()
