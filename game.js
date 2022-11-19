@@ -11,9 +11,10 @@ kaboom({
 const MOVE_SPEED = 140
 const JUMP_FORCE = 360
 const BIG_JUMP_FORCE = 700
-let CURRENT_JUMP_FORCE = 700
+let CURRENT_JUMP_FORCE = 360
 let score = 0
 const ENEMY_SPEED = 20
+const FALL_DEATH = 400
 
 let isJumping = true
 // Our sprites (the artwork that makes up the building blocks of the game)
@@ -36,7 +37,7 @@ loadSprite('rockstar-girl', 'rockstar-girl.png')
 // background sprite
 loadSprite("bg", "bg.png");
 // jump sound effect
-loadSprite("jump-sound", "jump-sound.mp3");
+// loadSprite("jump-sound", "jump-sound.mp3");
 
 // Game render settings
 scene("game", () => {
@@ -66,8 +67,11 @@ scene("game", () => {
     ]
 
     add([
-        sprite("bg", {width: width(), height: height()})
-      ]);
+        sprite("bg", {
+            width: width(),
+            height: height()
+        })
+    ]);
 
 
     const levelCfg = {
@@ -80,7 +84,7 @@ scene("game", () => {
         '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
         '!': [sprite('surprise-box'), solid(), 'note-surprise'],
         'x': [sprite('guitar'), solid(), 'guitar', body()],
-        'z': [sprite('music-note'), solid(), 'note'],
+        'z': [sprite('music-note'), 'note'],
         // 'y': [sprite('rock', solid())],
 
 
@@ -99,7 +103,7 @@ scene("game", () => {
         }
     ])
 
-    add([text(score + 'test', pos(4, 6))])
+    add([text(score, pos(4, 6))])
     // the logic that makes things jump out of boxes
 
     // the logic that will allow us to get bigger when we touch a guitar
@@ -186,7 +190,15 @@ scene("game", () => {
             })
         }
     })
-
+    // falldeath
+    player.action(() => {
+        camPos(player.pos)
+        if (player.pos.y >= FALL_DEATH) {
+            go('lose', {
+                score: scoreText.value
+            })
+        }
+    })
     // player controls
     keyDown('left', () => {
         player.move(-MOVE_SPEED, 0)
@@ -205,7 +217,7 @@ scene("game", () => {
     keyPress('space', () => {
         if (player.grounded()) {
             isJumping = true;
-            play("jump-sound");
+
             player.jump(CURRENT_JUMP_FORCE);
         }
     })
@@ -215,11 +227,12 @@ scene("game", () => {
 scene('lose', ({
     score
 }) => {
-    add([text('You scored ' + score, 32), origin('center'), pos(width() / 2, height() / 2)]);
+    add([text('You scored ' + score + ' Press space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
+
 
     keyPress("space", () => {
         go("game");
-      });
+    });
 });
 
 // guess what this does?
