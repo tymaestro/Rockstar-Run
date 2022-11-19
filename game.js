@@ -17,6 +17,7 @@ let level = 0
 const ENEMY_SPEED = 20
 const FALL_DEATH = 400
 
+
 let isJumping = true
 // Our sprites (the artwork that makes up the building blocks of the game)
 
@@ -32,15 +33,20 @@ loadSprite('guitar', 'guitar.png')
 loadSprite('block', 'brick.png')
 // surprise-box
 loadSprite('surprise-box', 'surprise-box.png')
-// rock
-// loadSprite('rock', 'rock.png')
+// rockstar-girl
 loadSprite('rockstar-girl', 'rockstar-girl.png')
 // background sprite
 loadSprite("bg", "bg.png");
-// jump sound effect
-// loadSprite("jump-sound", "jump-sound.mp3");
-// next level
+// limo next level sprite
 loadSprite('limo', 'limo.png')
+// grass
+loadSprite('grass', 'grass.png')
+loadSound("jump", "jump.wav")
+loadSound("guitar", "guitar.mp3")
+loadSound("limo", "limo.mp3")
+loadSound("horn", "horn.mp3")
+loadSound("smash", "smash.mp3")
+loadSound("nostalgia", "nostalgia.mp3");
 
 
 
@@ -55,6 +61,8 @@ scene("game", ({
 
     // These characters represent the sprites that can be found in legend
 
+    // play global music
+
 
     const maps = [
         [
@@ -63,7 +71,7 @@ scene("game", ({
             '                                      ',
             '                                      ',
             '                                      ',
-            '     z   @@@!                         ',
+            '     z   @!!!                         ',
             '                                      ',
             '                                      ',
             '                    ^   ^        +    ',
@@ -97,12 +105,12 @@ scene("game", ({
 
         // this is the legend for the sprites and defines the characteristics 
         '=': [sprite('block'), solid()],
+        'g': [sprite('grass'), solid()],
         '^': [sprite('beer'), solid(), 'dangerous'],
         '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
         '!': [sprite('surprise-box'), solid(), 'note-surprise'],
         'x': [sprite('guitar'), solid(), 'guitar', body()],
         'z': [sprite('music-note'), 'note'],
-        // 'y': [sprite('rock', solid())],
         '+': [sprite('limo'), solid(), scale(1.3), 'limo'],
 
     }
@@ -181,14 +189,21 @@ scene("game", ({
         }
     })
 
+    const music = play("nostalgia", {
+        volume: 0.3,
+        loop: false
+    })
+
     // when a player hits an item
     player.collides('guitar', (m) => {
         destroy(m)
+        play("guitar");
         player.biggify(6)
     })
 
     player.collides('note', (c) => {
         destroy(c)
+        play("horn");
         scoreText.value++
         scoreText.text = scoreText.value
     })
@@ -201,10 +216,12 @@ scene("game", ({
     player.collides('dangerous', (d) => {
         if (isJumping) {
             destroy(d)
+            play("smash");
         } else {
             go('lose', {
                 score: scoreText.value
             })
+            music.pause()
         }
     })
     // falldeath
@@ -214,6 +231,7 @@ scene("game", ({
             go('lose', {
                 score: scoreText.value
             })
+            music.pause()
         }
     })
 
@@ -224,10 +242,16 @@ scene("game", ({
                 go('game', {
                     level: (level + 1) % maps.length,
                     score: scoreText.value
-            })
-        } else {
-            go("win", { score: scoreText.value })
-        }
+
+                })
+                music.pause()
+                play("limo");
+            } else {
+                go("win", {
+                    score: scoreText.value
+                })
+                music.pause()
+            }
         })
     })
     // player controls
@@ -248,7 +272,7 @@ scene("game", ({
     keyPress('space', () => {
         if (player.grounded()) {
             isJumping = true;
-
+            play("jump");
             player.jump(CURRENT_JUMP_FORCE);
         }
     })
@@ -291,4 +315,5 @@ scene('lose', ({
 start("game", {
     score: 0,
     level: 0,
+
 });
