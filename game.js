@@ -27,6 +27,9 @@ loadRoot('./')
 loadSprite('music-note', 'music-note.png')
 // enemy sprite
 loadSprite('beer', 'beer.png')
+loadSprite('boy', 'boy.png')
+loadSprite('boy2', 'boy2.png')
+loadSprite('girl', 'girl.png')
 // special box item
 loadSprite('guitar', 'guitar.png')
 // floor block
@@ -78,17 +81,51 @@ scene("game", ({
             '==============================   =====',
         ],
         [
-            '                                         ',
-            '                                         ',
-            '                                         ',
-            '                                         ',
-            '                                         ',
-            '         @@!@@@              = =         ',
-            '                           = = =         ',
-            '                         = = = =  x      ',
-            '                ^   ^  = = = = =  x +    ',
-            '=========================================',
-        ]
+            '                                            ',
+            '                                            ',
+            '                                 !          ',
+            '                                            ',
+            '                               =            ',
+            '         @@!@@@              = =            ',
+            '                           = = =            ',
+            '                         = = = =            ',
+            '                ^   ^  = = = = =       +    ',
+            '================================       =====',
+        ],
+        [
+            "                                                                                                ",
+            "                                                                                                ",
+            "                                                                                                ",
+            "                                                                                                ",
+            "                        !                                                                       ",
+            "       @                                                                                        ",
+            "                                                                                                ",
+            "      =====                  =                                                                  ",
+            "                                  =                  !                                          ",
+            "               =                                               @                                ",
+            "                                      =                 !                                       ",
+            "                  =              =    =                                                         ",
+            "                           =     =    =                =                                        ",
+            "       f                   =     =    =   ^   ^        =      g           b               +     ",
+            "================     ===========================================================================",
+          ],
+          [
+            "                                                                                             ",
+            "                                                                                             ",
+            "                                                                                             ",
+            "                                       z                                                     ",
+            "                                                                                             ",
+            "                                   =!=                                                       ",
+            "                                                                                             ",
+            "      =@===                  =!=    ===                                                      ",
+            "                                                                                             ",
+            "                                                                                             ",
+            "                            ==                                                               ",
+            "       =                   =                                                                 ",
+            "       =                                            =                                        ",
+            "       =       ^        ^                       ^   =              fg                b +     ",
+            "================     ====================================     ===============================",
+          ]
     ]
 
     add([
@@ -107,6 +144,9 @@ scene("game", ({
         '=': [sprite('block'), solid()],
         'g': [sprite('grass'), solid()],
         '^': [sprite('beer'), solid(), 'dangerous'],
+        'b': [sprite('boy'), solid(), scale(0.5), 'dangerous'],
+        'f': [sprite('boy2'), solid(),scale(0.5),'dangerous'],
+        'g': [sprite('girl'), solid(), scale(0.5),'dangerous'],
         '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
         '!': [sprite('surprise-box'), solid(), 'note-surprise'],
         'x': [sprite('guitar'), solid(), 'guitar', body()],
