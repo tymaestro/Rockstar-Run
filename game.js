@@ -17,6 +17,7 @@ let level = 0
 const ENEMY_SPEED = 20
 const FALL_DEATH = 400
 
+
 let isJumping = true
 // Our sprites (the artwork that makes up the building blocks of the game)
 
@@ -63,10 +64,6 @@ scene("game", ({
 
     // play global music
 
-    // const music = play("nostalgia", {
-    //     volume: 0.8,
-    //     loop: true
-    // })
 
     const maps = [
         [
@@ -193,6 +190,11 @@ scene("game", ({
         }
     })
 
+    const music = play("nostalgia", {
+        volume: 0.3,
+        loop: false
+    })
+
     // when a player hits an item
     player.collides('guitar', (m) => {
         destroy(m)
@@ -220,6 +222,7 @@ scene("game", ({
             go('lose', {
                 score: scoreText.value
             })
+            music.pause()
         }
     })
     // falldeath
@@ -229,6 +232,7 @@ scene("game", ({
             go('lose', {
                 score: scoreText.value
             })
+            music.pause()
         }
     })
 
@@ -241,11 +245,13 @@ scene("game", ({
                     score: scoreText.value
 
                 })
+                music.pause()
                 play("limo");
             } else {
                 go("win", {
                     score: scoreText.value
                 })
+                music.pause()
             }
         })
     })
@@ -312,5 +318,3 @@ start("game", {
     level: 0,
 
 });
-
-music.play()
