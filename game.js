@@ -69,13 +69,26 @@ scene("game", () => {
     }
     // defines the map/s that will be rendered for the level
     const gameLevel = addLevel(map, levelCfg)
+
+    // these are the player settings. we need three of these functions for the three players in an if statement 
     const player = add([
         sprite('rockstar-girl'), solid(),
         pos(30, 0),
         body(),
-
         origin('bot')
     ])
+
+    // the displayed score in game 
+    const scoreText = add([
+        text('I will be the score'),
+        pos(30, 6),
+        layer('ui'),
+        {
+            value: 'test',
+        }
+    ])
+
+    add([text('level' + 'test', pos(4, 6))])
 })
 
 
