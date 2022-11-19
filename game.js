@@ -29,7 +29,7 @@ loadSprite('beer', 'beer.png')
 // special box item
 loadSprite('guitar', 'guitar.png')
 // floor block
-loadSprite('block', 'block.png')
+loadSprite('block', 'brick.png')
 // surprise-box
 loadSprite('surprise-box', 'surprise-box.png')
 // rock
@@ -39,12 +39,9 @@ loadSprite('rockstar-girl', 'rockstar-girl.png')
 loadSprite("bg", "bg.png");
 // jump sound effect
 // loadSprite("jump-sound", "jump-sound.mp3");
+// next level
+loadSprite('limo', 'limo.png')
 
-// temporary pipes
-loadSprite('pipe-top-left', 'ReTPiWY.png')
-loadSprite('pipe-top-right', 'hj2GK4n.png')
-loadSprite('pipe-bottom-left', 'c1cYSbt.png')
-loadSprite('pipe-bottom-right', 'nqQ79eI.png')
 
 
 
@@ -68,8 +65,8 @@ scene("game", ({
             '                                      ',
             '     z   @@@!                         ',
             '                                      ',
-            '                            -+        ',
-            '                    ^   ^   ()        ',
+            '                                      ',
+            '                    ^   ^        +    ',
             '==============================   =====',
         ],
         [
@@ -80,8 +77,8 @@ scene("game", ({
             '                                         ',
             '         @@!@@@              = =         ',
             '                           = = =         ',
-            '                         = = = =  x   -+ ',
-            '                ^   ^  = = = = =  x   () ',
+            '                         = = = =  x      ',
+            '                ^   ^  = = = = =  x +    ',
             '=========================================',
         ]
     ]
@@ -106,13 +103,7 @@ scene("game", ({
         'x': [sprite('guitar'), solid(), 'guitar', body()],
         'z': [sprite('music-note'), 'note'],
         // 'y': [sprite('rock', solid())],
-
-        // temp pipes
-        '(': [sprite('pipe-bottom-left'), solid(), scale(0.5)],
-        ')': [sprite('pipe-bottom-right'), solid(), scale(0.5)],
-        '-': [sprite('pipe-top-left'), solid(), scale(0.5), 'pipe'],
-        '+': [sprite('pipe-top-right'), solid(), scale(0.5), 'pipe'],
-
+        '+': [sprite('limo'), solid(), scale(1.3), 'limo'],
 
     }
     // defines the map/s that will be rendered for the level
@@ -227,7 +218,7 @@ scene("game", ({
     })
 
     // down a pipe
-    player.collides('pipe', () => {
+    player.collides('limo', () => {
         keyPress('down', () => {
             go('game', {
                 level: (level + 1) % maps.length,
