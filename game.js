@@ -32,15 +32,14 @@ loadSprite('guitar', 'guitar.png')
 loadSprite('block', 'brick.png')
 // surprise-box
 loadSprite('surprise-box', 'surprise-box.png')
-// rock
-// loadSprite('rock', 'rock.png')
+// rockstar-girl
 loadSprite('rockstar-girl', 'rockstar-girl.png')
 // background sprite
 loadSprite("bg", "bg.png");
-// jump sound effect
-// loadSprite("jump-sound", "jump-sound.mp3");
-// next level
+// limo next level sprite
 loadSprite('limo', 'limo.png')
+// grass
+loadSprite('grass', 'grass.png')
 
 
 
@@ -97,12 +96,12 @@ scene("game", ({
 
         // this is the legend for the sprites and defines the characteristics 
         '=': [sprite('block'), solid()],
+        'g': [sprite('grass'), solid()],
         '^': [sprite('beer'), solid(), 'dangerous'],
         '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
         '!': [sprite('surprise-box'), solid(), 'note-surprise'],
         'x': [sprite('guitar'), solid(), 'guitar', body()],
         'z': [sprite('music-note'), 'note'],
-        // 'y': [sprite('rock', solid())],
         '+': [sprite('limo'), solid(), scale(1.3), 'limo'],
 
     }
@@ -248,7 +247,6 @@ scene("game", ({
     keyPress('space', () => {
         if (player.grounded()) {
             isJumping = true;
-
             player.jump(CURRENT_JUMP_FORCE);
         }
     })
