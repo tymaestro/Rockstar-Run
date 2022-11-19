@@ -23,7 +23,8 @@ loadSprite('block', 'block.png')
 // surprise-box
 loadSprite('surprise-box', 'surprise-box.png')
 // rock
-loadSprite('rock', 'rock.png')
+// loadSprite('rock', 'rock.png')
+loadSprite('rockstar-girl', 'rockstar-girl.png')
 
 // Game render settings
 scene("game", () => {
@@ -57,17 +58,26 @@ scene("game", () => {
         height: 20,
 
         // this is the legend for the sprites and defines the characteristics 
-        '=': [sprite('block', solid())],
+        '=': [sprite('block'), solid()],
         '^': [sprite('beer'), solid(), 'dangerous'],
         '@': [sprite('surprise-box', solid())],
         'x': [sprite('guitar', solid())],
         'z': [sprite('music-note', solid())],
-        'y': [sprite('rock', solid())],
+        // 'y': [sprite('rock', solid())],
+
 
     }
     // defines the map/s that will be rendered for the level
     const gameLevel = addLevel(map, levelCfg)
+    const player = add([
+        sprite('rockstar-girl'), solid(),
+        pos(30, 0),
+        body(),
+
+        origin('bot')
+    ])
 })
+
 
 // guess what this does?
 start('game')
