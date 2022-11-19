@@ -42,6 +42,10 @@ loadSprite("bg", "bg.png");
 // next level
 loadSprite('limo', 'limo.png')
 loadSound("jump", "jump.wav")
+loadSound("guitar", "guitar.mp3")
+loadSound("limo", "limo.mp3")
+loadSound("horn", "horn.mp3")
+loadSound("smash", "smash.mp3")
 loadSound("nostalgia", "nostalgia.mp3");
 
 
@@ -58,10 +62,11 @@ scene("game", ({
     // These characters represent the sprites that can be found in legend
 
     // play global music
-    const music = play("nostalgia", {
-        volume: 0.8,
-        loop: true
-    })
+
+    // const music = play("nostalgia", {
+    //     volume: 0.8,
+    //     loop: true
+    // })
 
     const maps = [
         [
@@ -70,7 +75,7 @@ scene("game", ({
             '                                      ',
             '                                      ',
             '                                      ',
-            '     z   @@@!                         ',
+            '     z   @!!!                         ',
             '                                      ',
             '                                      ',
             '                    ^   ^        +    ',
@@ -191,11 +196,13 @@ scene("game", ({
     // when a player hits an item
     player.collides('guitar', (m) => {
         destroy(m)
+        play("guitar");
         player.biggify(6)
     })
 
     player.collides('note', (c) => {
         destroy(c)
+        play("horn");
         scoreText.value++
         scoreText.text = scoreText.value
     })
@@ -208,6 +215,7 @@ scene("game", ({
     player.collides('dangerous', (d) => {
         if (isJumping) {
             destroy(d)
+            play("smash");
         } else {
             go('lose', {
                 score: scoreText.value
@@ -231,7 +239,9 @@ scene("game", ({
                 go('game', {
                     level: (level + 1) % maps.length,
                     score: scoreText.value
+
                 })
+                play("limo");
             } else {
                 go("win", {
                     score: scoreText.value
