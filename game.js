@@ -9,9 +9,9 @@ kaboom({
 })
 
 const MOVE_SPEED = 140
-const JUMP_FORCE = 360
-const BIG_JUMP_FORCE = 700
-let CURRENT_JUMP_FORCE = 360
+const JUMP_FORCE = 380
+const BIG_JUMP_FORCE = 500
+let CURRENT_JUMP_FORCE = 380
 let score = 0
 let level = 0
 const ENEMY_SPEED = 20
@@ -57,6 +57,8 @@ scene("game", ({
     layers(['bg', 'obj', 'ui'], 'obj')
 
     // These characters represent the sprites that can be found in legend
+
+
     const maps = [
         [
             '                                      ',
@@ -64,39 +66,23 @@ scene("game", ({
             '                                      ',
             '                                      ',
             '                                      ',
+            '     z   @@@!                         ',
             '                                      ',
-            '                                      ',
-            '                                      ',
-            '                                      ',
-            '                             @        ',
-            '                                      ',
-            '            !                         ',
-            '                   z                  ',
-            '                                      ',
-            '       @                              ',
-            '                                  -+  ',
-            '                         ^  ^     ()   ',
-            '======================================',
+            '                            -+        ',
+            '                    ^   ^   ()        ',
+            '==============================   =====',
         ],
         [
-            '                                      ',
-            '                                      ',
-            '                                      ',
-            '                                      ',
-            '                                      ',
-            '                                      ',
-            '                                      ',
-            '                                      ',
-            '                                      ',
-            '                             @        ',
-            '                                      ',
-            '            !                         ',
-            '                   z                  ',
-            '                                      ',
-            '       @                              ',
-            '                                  -+  ',
-            '                         ^  ^     ()   ',
-            '======================================',
+            '                                         ',
+            '                                         ',
+            '                                         ',
+            '                                         ',
+            '                                         ',
+            '         @@!@@@              = =         ',
+            '                           = = =         ',
+            '                         = = = =  x   -+ ',
+            '                ^   ^  = = = = =  x   () ',
+            '=========================================',
         ]
     ]
 
