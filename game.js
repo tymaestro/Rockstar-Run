@@ -220,10 +220,14 @@ scene("game", ({
     // down a pipe
     player.collides('limo', () => {
         keyPress('down', () => {
-            go('game', {
-                level: (level + 1) % maps.length,
-                score: scoreText.value
+            if (level < maps.length - 1) {
+                go('game', {
+                    level: (level + 1) % maps.length,
+                    score: scoreText.value
             })
+        } else {
+            go("win", { score: scoreText.value })
+        }
         })
     })
     // player controls
@@ -250,6 +254,22 @@ scene("game", ({
     })
 
 })
+
+// when you win this screen shows
+scene('win', ({
+    score
+}) => {
+    add([text('Winner! You scored ' + score + '.\n\nPress space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
+
+
+    // restarts the game after win
+    keyPress("space", () => {
+        go("game", {
+            score: 0,
+            level: 0,
+        });
+    });
+});
 
 // when you die this screen shows
 scene('lose', ({
