@@ -9,7 +9,8 @@ kaboom({
 })
 
 const MOVE_SPEED = 140
-const CURRENT_JUMP_FORCE = 360
+const CURRENT_JUMP_FORCE = 700
+const BIG_JUMP_FORCE = 700
 
 // Our sprites (the artwork that makes up the building blocks of the game)
 
@@ -43,13 +44,13 @@ scene("game", () => {
         '                                      ',
         '                                      ',
         '                                      ',
-        '          x                           ',
+        '                                     ',
         '                             @        ',
         '                                      ',
-        '                                      ',
+        '            !                         ',
         '                   z                  ',
         '                                      ',
-        '                                      ',
+        '       @                              ',
         '                                      ',
         '                         ^  ^         ',
         '======================================',
@@ -63,9 +64,10 @@ scene("game", () => {
         // this is the legend for the sprites and defines the characteristics 
         '=': [sprite('block'), solid()],
         '^': [sprite('beer'), solid(), 'dangerous'],
-        '@': [sprite('surprise-box', solid())],
-        'x': [sprite('guitar', solid())],
-        'z': [sprite('music-note', solid())],
+        '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
+        '!': [sprite('surprise-box'), solid(), 'note-surprise'],
+        'x': [sprite('guitar', solid()), 'guitar', body()],
+        'z': [sprite('music-note', solid()), ],
         // 'y': [sprite('rock', solid())],
 
 
@@ -78,9 +80,23 @@ scene("game", () => {
         sprite('rockstar-girl'), solid(),
         pos(30, 0),
         body(),
+        big(),
         origin('bot')
     ])
 
+    // the logic that makes things jump out of boxes
+    player.on("headbump", (obj) => {
+        if (obj.is('note-surprise')) {
+            gameLevel.spawn('z', obj.gridPos.sub(0, 1))
+            destroy(obj)
+            gameLevel.spawn('}', obj.gridPos.sub(0, 0))
+        }
+        if (obj.is('guitar-surprise')) {
+            gameLevel.spawn('x', obj.gridPos.sub(0, 1))
+            destroy(obj)
+            gameLevel.spawn('}', obj.gridPos.sub(0, 0))
+        }
+    })
     // the displayed score in game 
     const scoreText = add([
         text('I will be the score'),
@@ -108,9 +124,42 @@ scene("game", () => {
         }
     })
 
+    // the logic that will allow us to get bigger when we touch a guitar
+    function big() {
+        let timer = 0
+        let isBig = false
+        return {
+            update() {
+                if (isBig) {
+                    CURRENT_JUMP_FORCE = BIG_JUMP_FORCE
+                    timer -= dt()
+                    if (timer <= 0) {
+                        this.smallify()
+                    }
+                }
+            },
+            isBig() {
+                return isBig
+            },
+            smallify() {
+                this.scale = vec2(1)
+                CURRENT_JUMP_FORCE = JUMP_FORCE
+                timer = 0
+                isBig = false
+            },
+            biggify(time) {
+                this.scale = vec2(2)
+                timer = time
+                isBig = true
+            }
+        }
+    }
+    // makes guitars move when they come out of a box
+    action('guitar', (m) => {
+        m.move(20, 0)
+    })
 
 })
-
 
 // guess what this does?
 start('game')
