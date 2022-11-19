@@ -9,7 +9,8 @@ kaboom({
 })
 
 const MOVE_SPEED = 140
-const CURRENT_JUMP_FORCE = 700
+const JUMP_FORCE = 360
+let CURRENT_JUMP_FORCE = 700
 const BIG_JUMP_FORCE = 700
 
 // Our sprites (the artwork that makes up the building blocks of the game)
@@ -44,7 +45,7 @@ scene("game", () => {
         '                                      ',
         '                                      ',
         '                                      ',
-        '                                     ',
+        '                                      ',
         '                             @        ',
         '                                      ',
         '            !                         ',
@@ -67,7 +68,7 @@ scene("game", () => {
         '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
         '!': [sprite('surprise-box'), solid(), 'note-surprise'],
         'x': [sprite('guitar', solid()), 'guitar', body()],
-        'z': [sprite('music-note', solid()), ],
+        'z': [sprite('music-note'), solid(), 'note'],
         // 'y': [sprite('rock', solid())],
 
 
@@ -103,12 +104,13 @@ scene("game", () => {
         pos(30, 6),
         layer('ui'),
         {
-            value: 'test',
+            value: 'value',
         }
     ])
 
     add([text('level' + 'test', pos(4, 6))])
 
+    // player controls
     keyDown('left', () => {
         player.move(-MOVE_SPEED, 0)
     })
@@ -156,7 +158,19 @@ scene("game", () => {
     }
     // makes guitars move when they come out of a box
     action('guitar', (m) => {
-        m.move(20, 0)
+        m.move(25, 0)
+    })
+
+    // when a player hits an item
+    player.collides('guitar', (m) => {
+        destroy(m)
+        player.biggify(6)
+    })
+
+    player.collides('note', (c) => {
+        destroy(c)
+        scoreText.value++
+        scoreText.text = scoreText.value
     })
 
 })
