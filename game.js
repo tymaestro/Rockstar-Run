@@ -8,6 +8,8 @@ kaboom({
     clearColor: [0, 0, 1, 1],
 })
 
+const MOVE_SPEED = 140
+
 // Our sprites (the artwork that makes up the building blocks of the game)
 
 // sets the location of sprite files
@@ -89,6 +91,16 @@ scene("game", () => {
     ])
 
     add([text('level' + 'test', pos(4, 6))])
+
+    keyDown('left', () => {
+        player.move(-MOVE_SPEED, 0)
+    })
+
+    keyDown('right', () => {
+        player.move(MOVE_SPEED, 0)
+    })
+
+
 })
 
 
