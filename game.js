@@ -259,7 +259,7 @@ scene("game", ({
 scene('win', ({
     score
 }) => {
-    add([text('Winner! You scored ' + score + ' Press space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
+    add([text('Winner! You scored ' + score + '.\n\nPress space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
 
 
     // restarts the game after win
