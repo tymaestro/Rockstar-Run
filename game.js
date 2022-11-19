@@ -35,6 +35,8 @@ loadSprite('surprise-box', 'surprise-box.png')
 loadSprite('rockstar-girl', 'rockstar-girl.png')
 // background sprite
 loadSprite("bg", "bg.png");
+// jump sound effect
+loadSprite("jump-sound", "jump-sound.mp3");
 
 // Game render settings
 scene("game", () => {
@@ -202,23 +204,25 @@ scene("game", () => {
 
     keyPress('space', () => {
         if (player.grounded()) {
-            isJumping = true
-            player.jump(CURRENT_JUMP_FORCE)
+            isJumping = true;
+            play("jump-sound");
+            player.jump(CURRENT_JUMP_FORCE);
         }
     })
 
-
-
-
-    scene('lose', ({
-        score
-    }) => {
-        add([text('You scored ' + score, 32), origin('center'), pos(width() / 2, height() / 2)])
-    })
-
 })
+
+scene('lose', ({
+    score
+}) => {
+    add([text('You scored ' + score, 32), origin('center'), pos(width() / 2, height() / 2)]);
+
+    keyPress("space", () => {
+        go("game");
+      });
+});
 
 // guess what this does?
 start("game", {
     score: 0,
-})
+});
