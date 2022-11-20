@@ -44,12 +44,15 @@ loadSprite("bg", "images/bg.png");
 loadSprite('limo', 'images/limo.png')
 // grass
 loadSprite('grass', 'images/grass.png')
+// mic stand
+loadSprite('mic', 'images/mic.png')
+
 loadSound("jump", "audio/jump.wav")
 loadSound("guitar", "audio/guitar.mp3")
 loadSound("limo", "audio/limo.mp3")
 loadSound("horn", "audio/horn.mp3")
 loadSound("smash", "audio/smash.mp3")
-loadSound("nostalgia", "audio/nostalgia.mp3");
+loadSound("rock-music", "audio/rock-music.mp3");
 
 
 
@@ -123,7 +126,7 @@ scene("game", ({
             "                            ==                                                               ",
             "       =                   =                                                                 ",
             "       =                                            =                                        ",
-            "       =       ^        ^                       ^   =              fg                b +     ",
+            "       =       ^        ^                       ^   =              fg                b m     ",
             "================     ====================================     ===============================",
         ]
     ]
@@ -147,8 +150,13 @@ scene("game", ({
         'x': [sprite('guitar'), solid(), 'guitar', body()],
         'z': [sprite('music-note'), 'note'],
         '+': [sprite('limo'), solid(), scale(1.3), 'limo'],
+        'm': [sprite('mic'), solid(), scale(1.3), 'mic'],
 
     }
+    const music = play("rock-music", {
+        volume: 0.1,
+        loop: false
+    })
     // defines the map/s that will be rendered for the level
     const gameLevel = addLevel(maps[level], levelCfg)
 
@@ -224,10 +232,6 @@ scene("game", ({
         }
     })
 
-    const music = play("nostalgia", {
-        volume: 0.3,
-        loop: false
-    })
 
     // when a player hits an item
     player.collides('guitar', (m) => {
