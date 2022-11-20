@@ -22,7 +22,7 @@ let isJumping = true
 // Our sprites (the artwork that makes up the building blocks of the game)
 
 // sets the location of sprite files
-loadRoot('../assets/');
+loadRoot('./assets/');
 // regular box item
 loadSprite('music-note', 'images/music-note.png');
 // enemy sprite
@@ -61,6 +61,12 @@ loadSound("smash", "audio/smash.mp3");
 loadSound("rock-music", "audio/rock-music.mp3");
 // headbump
 loadSound("headbump", "audio/headbump.mp3");
+// gameover sound
+loadSound("gameover", "audio/gameover.wav");
+// victory sound
+loadSound("victory", "audio/victory.mp3");
+// gasp sound
+loadSound("gasp", "audio/gasp.wav");
 
 
 
@@ -150,9 +156,9 @@ scene("game", ({
         '=': [sprite('block'), solid()],
         'g': [sprite('grass'), solid()],
         '^': [sprite('beer'), solid(), 'dangerous'],
-        'b': [sprite('boy'), solid(), scale(0.5), 'dangerous'],
-        'f': [sprite('boy2'), solid(), scale(0.5), 'dangerous'],
-        'g': [sprite('girl'), solid(), scale(0.5), 'dangerous'],
+        'b': [sprite('boy'), solid(), scale(0.5), 'fan'],
+        'f': [sprite('boy2'), solid(), scale(0.5), 'fan'],
+        'g': [sprite('girl'), solid(), scale(0.5), 'fan'],
         '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
         '!': [sprite('surprise-box'), solid(), 'note-surprise'],
         'x': [sprite('guitar'), solid(), 'guitar', body()],
@@ -261,6 +267,10 @@ scene("game", ({
         d.move(-ENEMY_SPEED, 0)
     })
 
+    action('fan', (c) => {
+        c.move(-ENEMY_SPEED, 0)
+    })
+
     player.collides('dangerous', (d) => {
         if (isJumping) {
             destroy(d)
@@ -270,8 +280,23 @@ scene("game", ({
                 score: scoreText.value
             })
             music.pause()
+            play("gameover");
         }
     })
+
+    player.collides('fan', (f) => {
+        if (isJumping) {
+            destroy(f)
+            play("gasp");
+        } else {
+            go('lose', {
+                score: scoreText.value
+            })
+            music.pause()
+            play("gameover");
+        }
+    })
+
     // falldeath
     player.action(() => {
         camPos(player.pos)
@@ -280,6 +305,7 @@ scene("game", ({
                 score: scoreText.value
             })
             music.pause()
+            play("gameover");
         }
     })
 
@@ -299,6 +325,7 @@ scene("game", ({
                     score: scoreText.value
                 })
                 music.pause()
+                play("victory");
             }
         })
     })
@@ -307,6 +334,8 @@ scene("game", ({
         go("win", {
             score: scoreText.value
         })
+        music.pause()
+        play("victory");
     })
 
     // player controls
@@ -354,7 +383,7 @@ scene('win', ({
 scene('lose', ({
     score
 }) => {
-    add([text('You scored ' + score + ' Press space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
+    add([text('Gameover! You scored ' + score + '\n\nPress space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
 
 
     // restarts the game after death with spacebar 
