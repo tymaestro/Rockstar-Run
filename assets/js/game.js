@@ -61,6 +61,10 @@ loadSound("smash", "audio/smash.mp3");
 loadSound("rock-music", "audio/rock-music.mp3");
 // headbump
 loadSound("headbump", "audio/headbump.mp3");
+// gameover sound
+loadSound("gameover", "audio/gameover.wav");
+// victory sound
+loadSound("victory", "audio/victory.mp3");
 
 
 
@@ -270,6 +274,7 @@ scene("game", ({
                 score: scoreText.value
             })
             music.pause()
+            play("gameover");
         }
     })
     // falldeath
@@ -280,6 +285,7 @@ scene("game", ({
                 score: scoreText.value
             })
             music.pause()
+            play("gameover");
         }
     })
 
@@ -299,6 +305,7 @@ scene("game", ({
                     score: scoreText.value
                 })
                 music.pause()
+                play("victory");
             }
         })
     })
@@ -307,6 +314,8 @@ scene("game", ({
         go("win", {
             score: scoreText.value
         })
+        music.pause()
+        play("victory");
     })
 
     // player controls
@@ -354,7 +363,7 @@ scene('win', ({
 scene('lose', ({
     score
 }) => {
-    add([text('You scored ' + score + ' Press space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
+    add([text('Gameover! You scored ' + score + '\n\nPress space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
 
 
     // restarts the game after death with spacebar 
