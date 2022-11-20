@@ -22,7 +22,7 @@ let isJumping = true
 // Our sprites (the artwork that makes up the building blocks of the game)
 
 // sets the location of sprite files
-loadRoot('../assets/');
+loadRoot('./assets/');
 // regular box item
 loadSprite('music-note', 'images/music-note.png');
 // enemy sprite
