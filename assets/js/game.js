@@ -22,36 +22,42 @@ let isJumping = true
 // Our sprites (the artwork that makes up the building blocks of the game)
 
 // sets the location of sprite files
-loadRoot('../assets/')
+loadRoot('../assets/');
 // regular box item
-loadSprite('music-note', 'images/music-note.png')
+loadSprite('music-note', 'images/music-note.png');
 // enemy sprite
-loadSprite('beer', 'images/beer.png')
-loadSprite('boy', 'images/boy.png')
-loadSprite('boy2', 'images/boy2.png')
-loadSprite('girl', 'images/girl.png')
+loadSprite('beer', 'images/beer.png');
+loadSprite('boy', 'images/boy.png');
+loadSprite('boy2', 'images/boy2.png');
+loadSprite('girl', 'images/girl.png');
 // special box item
-loadSprite('guitar', 'images/guitar.png')
+loadSprite('guitar', 'images/guitar.png');
 // floor block
-loadSprite('block', 'images/brick.png')
+loadSprite('block', 'images/brick.png');
 // surprise-box
-loadSprite('surprise-box', 'images/surprise-box.png')
+loadSprite('surprise-box', 'images/surprise-box.png');
 // rockstar-girl
-loadSprite('rockstar-girl', 'images/rockstar-girl.png')
+loadSprite('rockstar-girl', 'images/rockstar-girl.png');
 // background sprite
 loadSprite("bg", "images/bg.png");
 // limo next level sprite
-loadSprite('limo', 'images/limo.png')
+loadSprite('limo', 'images/limo.png');
 // grass
-loadSprite('grass', 'images/grass.png')
+loadSprite('grass', 'images/grass.png');
 // mic stand
-loadSprite('mic', 'images/mic.png')
+loadSprite('mic', 'images/mic.png');
 
-loadSound("jump", "audio/jump.wav")
-loadSound("guitar", "audio/guitar.mp3")
-loadSound("limo", "audio/limo.mp3")
-loadSound("horn", "audio/horn.mp3")
-loadSound("smash", "audio/smash.mp3")
+// jump sound
+loadSound("jump", "audio/jump.wav");
+// guitar sound
+loadSound("guitar", "audio/guitar.mp3");
+// limo sound
+loadSound("limo", "audio/limo.mp3");
+// horn sound
+loadSound("horn", "audio/horn.mp3");
+// smash sound
+loadSound("smash", "audio/smash.mp3");
+// rock music
 loadSound("rock-music", "audio/rock-music.mp3");
 
 
@@ -274,7 +280,7 @@ scene("game", ({
         }
     })
 
-    // down a pipe
+    // down a limo
     player.collides('limo', () => {
         keyPress('down', () => {
             if (level < maps.length - 1) {
@@ -293,6 +299,13 @@ scene("game", ({
             }
         })
     })
+
+    player.collides("mic", () => {
+        go("win", {
+            score: scoreText.value
+        })
+      })
+
     // player controls
     keyDown('left', () => {
         player.move(-MOVE_SPEED, 0)
