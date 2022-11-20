@@ -46,6 +46,7 @@ loadSprite('limo', 'images/limo.png');
 loadSprite('grass', 'images/grass.png');
 // mic stand
 loadSprite('mic', 'images/mic.png');
+loadSprite('lose', 'images/game-over.png')
 
 // jump sound
 loadSound("jump", "audio/jump.wav");
@@ -379,12 +380,29 @@ scene('win', ({
     });
 });
 
+// [sprite('mic'), solid(), scale(1.3), 'mic'],
+
 // when you die this screen shows
 scene('lose', ({
     score
 }) => {
-    add([text('Gameover! You scored ' + score + '\n\nPress space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
+    // Game over image
+    add([
+        sprite('lose'),
+        solid(),
+        origin('center'),
+        scale(0.1),
+        pos(width() / 2,
+        height() / 2),
+    ]),
 
+    // Game over text with score
+    add([
+        text('Gameover! You scored ' + score + '\n\nPress space to play again', 15),
+        origin('center'),
+        pos(width() / 2,
+        height() / 2)
+    ]);
 
     // restarts the game after death with spacebar 
     keyPress("space", () => {
