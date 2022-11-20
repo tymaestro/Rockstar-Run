@@ -5,7 +5,7 @@ kaboom({
     fullscreen: true,
     scale: 2,
     debug: true,
-    clearColor: [0, 0, 1, 1],
+    clearColor: [0, 0, 0, 1],
 })
 
 const MOVE_SPEED = 140
@@ -22,34 +22,37 @@ let isJumping = true
 // Our sprites (the artwork that makes up the building blocks of the game)
 
 // sets the location of sprite files
-loadRoot('./')
+loadRoot('../assets/')
 // regular box item
-loadSprite('music-note', 'music-note.png')
+loadSprite('music-note', 'images/music-note.png')
 // enemy sprite
-loadSprite('beer', 'beer.png')
-loadSprite('boy', 'boy.png')
-loadSprite('boy2', 'boy2.png')
-loadSprite('girl', 'girl.png')
+loadSprite('beer', 'images/beer.png')
+loadSprite('boy', 'images/boy.png')
+loadSprite('boy2', 'images/boy2.png')
+loadSprite('girl', 'images/girl.png')
 // special box item
-loadSprite('guitar', 'guitar.png')
+loadSprite('guitar', 'images/guitar.png')
 // floor block
-loadSprite('block', 'brick.png')
+loadSprite('block', 'images/brick.png')
 // surprise-box
-loadSprite('surprise-box', 'surprise-box.png')
+loadSprite('surprise-box', 'images/surprise-box.png')
 // rockstar-girl
-loadSprite('rockstar-girl', 'rockstar-girl.png')
+loadSprite('rockstar-girl', 'images/rockstar-girl.png')
 // background sprite
-loadSprite("bg", "bg.png");
+loadSprite("bg", "images/bg.png");
 // limo next level sprite
-loadSprite('limo', 'limo.png')
+loadSprite('limo', 'images/limo.png')
 // grass
-loadSprite('grass', 'grass.png')
-loadSound("jump", "jump.wav")
-loadSound("guitar", "guitar.mp3")
-loadSound("limo", "limo.mp3")
-loadSound("horn", "horn.mp3")
-loadSound("smash", "smash.mp3")
-loadSound("nostalgia", "nostalgia.mp3");
+loadSprite('grass', 'images/grass.png')
+// mic stand
+loadSprite('mic', 'images/mic.png')
+
+loadSound("jump", "audio/jump.wav")
+loadSound("guitar", "audio/guitar.mp3")
+loadSound("limo", "audio/limo.mp3")
+loadSound("horn", "audio/horn.mp3")
+loadSound("smash", "audio/smash.mp3")
+loadSound("rock-music", "audio/rock-music.mp3");
 
 
 
@@ -108,8 +111,8 @@ scene("game", ({
             "                           =     =    =                =                                        ",
             "       f                   =     =    =   ^   ^        =      g           b               +     ",
             "================     ===========================================================================",
-          ],
-          [
+        ],
+        [
             "                                                                                             ",
             "                                                                                             ",
             "                                                                                             ",
@@ -123,17 +126,12 @@ scene("game", ({
             "                            ==                                                               ",
             "       =                   =                                                                 ",
             "       =                                            =                                        ",
-            "       =       ^        ^                       ^   =              fg                b +     ",
+            "       =       ^        ^                       ^   =              fg                b m     ",
             "================     ====================================     ===============================",
-          ]
+        ]
     ]
 
-    add([
-        sprite("bg", {
-            width: width(),
-            height: height()
-        })
-    ]);
+
 
 
     const levelCfg = {
@@ -145,15 +143,20 @@ scene("game", ({
         'g': [sprite('grass'), solid()],
         '^': [sprite('beer'), solid(), 'dangerous'],
         'b': [sprite('boy'), solid(), scale(0.5), 'dangerous'],
-        'f': [sprite('boy2'), solid(),scale(0.5),'dangerous'],
-        'g': [sprite('girl'), solid(), scale(0.5),'dangerous'],
+        'f': [sprite('boy2'), solid(), scale(0.5), 'dangerous'],
+        'g': [sprite('girl'), solid(), scale(0.5), 'dangerous'],
         '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
         '!': [sprite('surprise-box'), solid(), 'note-surprise'],
         'x': [sprite('guitar'), solid(), 'guitar', body()],
         'z': [sprite('music-note'), 'note'],
         '+': [sprite('limo'), solid(), scale(1.3), 'limo'],
+        'm': [sprite('mic'), solid(), scale(1.3), 'mic'],
 
     }
+    const music = play("rock-music", {
+        volume: 0.1,
+        loop: false
+    })
     // defines the map/s that will be rendered for the level
     const gameLevel = addLevel(maps[level], levelCfg)
 
@@ -229,10 +232,6 @@ scene("game", ({
         }
     })
 
-    const music = play("nostalgia", {
-        volume: 0.3,
-        loop: false
-    })
 
     // when a player hits an item
     player.collides('guitar', (m) => {
