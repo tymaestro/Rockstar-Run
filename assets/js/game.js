@@ -65,6 +65,8 @@ loadSound("headbump", "audio/headbump.mp3");
 loadSound("gameover", "audio/gameover.wav");
 // victory sound
 loadSound("victory", "audio/victory.mp3");
+// gasp sound
+loadSound("gasp", "audio/gasp.wav");
 
 
 
@@ -154,9 +156,9 @@ scene("game", ({
         '=': [sprite('block'), solid()],
         'g': [sprite('grass'), solid()],
         '^': [sprite('beer'), solid(), 'dangerous'],
-        'b': [sprite('boy'), solid(), scale(0.5), 'dangerous'],
-        'f': [sprite('boy2'), solid(), scale(0.5), 'dangerous'],
-        'g': [sprite('girl'), solid(), scale(0.5), 'dangerous'],
+        'b': [sprite('boy'), solid(), scale(0.5), 'fan'],
+        'f': [sprite('boy2'), solid(), scale(0.5), 'fan'],
+        'g': [sprite('girl'), solid(), scale(0.5), 'fan'],
         '@': [sprite('surprise-box'), solid(), 'guitar-surprise'],
         '!': [sprite('surprise-box'), solid(), 'note-surprise'],
         'x': [sprite('guitar'), solid(), 'guitar', body()],
@@ -265,6 +267,10 @@ scene("game", ({
         d.move(-ENEMY_SPEED, 0)
     })
 
+    action('fan', (c) => {
+        c.move(-ENEMY_SPEED, 0)
+    })
+
     player.collides('dangerous', (d) => {
         if (isJumping) {
             destroy(d)
@@ -277,6 +283,20 @@ scene("game", ({
             play("gameover");
         }
     })
+
+    player.collides('fan', (f) => {
+        if (isJumping) {
+            destroy(f)
+            play("gasp");
+        } else {
+            go('lose', {
+                score: scoreText.value
+            })
+            music.pause()
+            play("gameover");
+        }
+    })
+
     // falldeath
     player.action(() => {
         camPos(player.pos)
