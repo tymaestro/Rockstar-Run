@@ -5,7 +5,7 @@ kaboom({
     fullscreen: true,
     scale: 2,
     debug: true,
-    clearColor: [0, 0, 0, 1],
+    clearColor: [0, 0, 1, 1],
 })
 
 const MOVE_SPEED = 140
@@ -59,6 +59,8 @@ loadSound("horn", "audio/horn.mp3");
 loadSound("smash", "audio/smash.mp3");
 // rock music
 loadSound("rock-music", "audio/rock-music.mp3");
+// headbump
+loadSound("headbump", "audio/headbump.mp3");
 
 
 
