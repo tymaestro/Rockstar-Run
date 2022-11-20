@@ -83,7 +83,7 @@ scene("game", ({
             '                                      ',
             '                                      ',
             '                                      ',
-            '     z   @!!!                         ',
+            '     !   @!!!                         ',
             '                                      ',
             '                                      ',
             '                    ^   ^        +    ',
@@ -95,7 +95,7 @@ scene("game", ({
             '                                 !          ',
             '                                            ',
             '                               =            ',
-            '         @@!@@@              = =            ',
+            '         !!!@!!              = =            ',
             '                           = = =            ',
             '                         = = = =            ',
             '                ^   ^  = = = = =       +    ',
@@ -236,6 +236,7 @@ scene("game", ({
             destroy(obj)
             gameLevel.spawn('}', obj.gridPos.sub(0, 0))
         }
+        play("headbump");
     })
 
 
@@ -304,7 +305,7 @@ scene("game", ({
         go("win", {
             score: scoreText.value
         })
-      })
+    })
 
     // player controls
     keyDown('left', () => {
