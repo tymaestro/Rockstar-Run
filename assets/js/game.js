@@ -4,9 +4,9 @@ document.getElementById('start-button').addEventListener('click', startGame)
 function startGame() {
     kaboom({
         global: true,
-        fullscreen: true,
-        scale: 2,
-        debug: true,
+        width: 640,
+        height: 480,
+        canvas: document.querySelector("#game"),
         clearColor: [0, 0, 1, 1],
     })
 
@@ -416,7 +416,7 @@ function startGame() {
                 sprite('lose'),
                 solid(),
                 origin('center'),
-                scale(0.1),
+                scale(0.2),
                 pos(width() / 2,
                     height() / 2),
             ]),
@@ -426,7 +426,7 @@ function startGame() {
                 text('You scored ' + score + '\n\nPress space to play again', 15),
                 origin('center'),
                 pos(320,
-                    320)
+                    450)
             ]);
 
         // restarts the game after death with spacebar 
