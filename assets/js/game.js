@@ -22,9 +22,9 @@ function startGame() {
     })
 
     const MOVE_SPEED = 140
-    const JUMP_FORCE = 380
+    const JUMP_FORCE = 400
     const BIG_JUMP_FORCE = 500
-    let CURRENT_JUMP_FORCE = 380
+    let CURRENT_JUMP_FORCE = 400
     let score = 0
     let level = 0
     const ENEMY_SPEED = 20
