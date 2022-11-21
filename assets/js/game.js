@@ -82,10 +82,8 @@ scene('welcome', ({
     });
 });
 
-scene('instructions', ({
-}) => {
-    add([text('Instructions\n\n\n\nUse left and right arrows to move\n\n\nUse the spacebar to jump\n\n\n\nPress space to play', 15), origin('center'), pos(width() / 2, height() / 2)]);
-
+scene('instructions', ({}) => {
+    add([text('Instructions\n\n\n\n-Use left and right arrows to move\n\n\n-Use the spacebar to jump\n\n\n\n-Press down to enter a limo\n\n\n\nAvoid the beers (bad for your health)\n\n\n\nPress space to play', 15), origin('center'), pos(width() / 2, height() / 2)]);
 
     keyPress("space", () => {
         go("game", {
@@ -422,10 +420,10 @@ scene('lose', ({
 
     // Game over text with score
     add([
-        text('Gameover! You scored ' + score + '\n\nPress space to play again', 15),
+        text('You scored ' + score + '\n\nPress space to play again', 15),
         origin('center'),
-        pos(width() / 2,
-        height() / 2)
+        pos(320,
+            320)
     ]);
 
     // restarts the game after death with spacebar 
