@@ -1,5 +1,16 @@
 document.getElementById('start-button').addEventListener('click', startGame)
 
+const btn = document.getElementById('start-button');
+
+btn.addEventListener('click', () => {
+  // hide button
+  btn.style.display = 'none';
+
+  // show div
+  const box = document.getElementById('game');
+});
+
+
 // Kaboom initialisation settings
 function startGame() {
     kaboom({

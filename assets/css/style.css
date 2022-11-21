@@ -25,12 +25,9 @@ h1 {
 
 .game-area {
     padding-top: 5rem;
-    text-align: center;
-}
+    display: flex;
+    justify-content: center;
 
-.game-area {
-    padding-top: 5rem;
-    text-align: center;
 }
 
 .button {
