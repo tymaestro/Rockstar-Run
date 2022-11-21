@@ -10,7 +10,7 @@
 body {
     margin: 0;
     overflow: hidden;
-    background: url(/assets/images/people.webp);
+    background: url('/assets/images/people.webp');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
