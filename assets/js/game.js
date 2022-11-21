@@ -83,8 +83,8 @@ function startGame() {
         });
     });
 
-scene('instructions', ({}) => {
-    add([text('Instructions\n\n\n\n-Use left and right arrows to move\n\n\n-Use the spacebar to jump\n\n\n\n-Press down to enter a limo\n\n\n\nAvoid the beers (bad for your health)\n\n\n\nPress space to play', 15), origin('center'), pos(width() / 2, height() / 2)]);
+    scene('instructions', ({}) => {
+        add([text('Instructions\n\n\n\n-Use left and right arrows to move\n\n\n-Use the spacebar to jump\n\n\n\n-Press down to enter a limo\n\n\n\nAvoid the beers (bad for your health)\n\n\n\nPress space to play', 15), origin('center'), pos(width() / 2, height() / 2)]);
 
 
         keyPress("space", () => {
@@ -196,7 +196,7 @@ scene('instructions', ({}) => {
             loop: false
         })
         // defines the map/s that will be rendered for the level
-        const gameLevel = addLevel(maps[level], levelCfg)
+        const gameLevel = addLevel(maps[level], levelCfg);
 
 
         // the displayed score in game 
@@ -207,7 +207,7 @@ scene('instructions', ({}) => {
             {
                 value: score,
             }
-        ])
+        ]);
 
         add([text('level ' + parseInt(level + 1)), pos(40, 6)])
         // the logic that makes things jump out of boxes
@@ -241,7 +241,7 @@ scene('instructions', ({}) => {
                     isBig = true
                 }
             }
-        }
+        };
         // these are the player settings. we need three of these functions for the three players in an if statement 
         const player = add([
             sprite('rockstar-girl'), solid(),
@@ -403,41 +403,41 @@ scene('instructions', ({}) => {
         });
     });
 
-});
 
-// [sprite('mic'), solid(), scale(1.3), 'mic'],
+    // [sprite('mic'), solid(), scale(1.3), 'mic'],
 
-// when you die this screen shows
-scene('lose', ({
-    score
-}) => {
+    // when you die this screen shows
+    scene('lose', ({
+        score
+    }) => {
 
-    // Game over image
-    add([
-        sprite('lose'),
-        solid(),
-        origin('center'),
-        scale(0.1),
-        pos(width() / 2,
-        height() / 2),
-    ]),
+        // Game over image
+        add([
+                sprite('lose'),
+                solid(),
+                origin('center'),
+                scale(0.1),
+                pos(width() / 2,
+                    height() / 2),
+            ]),
 
-    // Game over text with score
-    add([
-        text('You scored ' + score + '\n\nPress space to play again', 15),
-        origin('center'),
-        pos(320,
-            320)
-    ]);
+            // Game over text with score
+            add([
+                text('You scored ' + score + '\n\nPress space to play again', 15),
+                origin('center'),
+                pos(320,
+                    320)
+            ]);
 
-    // restarts the game after death with spacebar 
-    keyPress("space", () => {
-        go("game", {
-            score: 0,
-            level: 0,
+        // restarts the game after death with spacebar 
+        keyPress("space", () => {
+            go("game", {
+                score: 0,
+                level: 0,
+            });
         });
-    });
 
+    })
     // guess what this does?
     start("welcome", {
         score: 0,
