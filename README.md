@@ -3,7 +3,7 @@
 
 Rockstar Run is our musical take on a classic platform game. The musician needs to make it to the concert but you must work through the levels to get there! Beers may seem like a tempting idea but they're bad for you so make sure to avoid them! Same goes for the adoring fans, you can't stop to sign autographs or you'll never make it to the concert! Collect musical notes to get points and collect the guitar to give you extra strength. As a rockstar, limos are the only way to get to your gig so jump in the sunroof to progress to the next level. If you manage to make it all the way to the end, you'll be greeted by a mic stand so you can start your gig!We hope you enjoy playing our game
 
-![Add Screenshots](Add screenshots here!)
+![Rockstar Run](/assets/images/game-opening.png)
 
 
 You can find the deployed version [here](https://tymaestro.github.io/Rockstar-Run/)
