@@ -10,16 +10,20 @@
 body {
     margin: 0;
     overflow: hidden;
-}
-
-.home-page {
-    background: #26547c;
+    background: url(/assets/images/people.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 100vh;
 }
 
 h1 {
     text-align: center;
     padding-top: 50px;
+}
+
+.game-area {
+    padding-top: 5rem;
+    text-align: center;
 }
 
 .button {
