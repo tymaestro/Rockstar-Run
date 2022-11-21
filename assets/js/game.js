@@ -69,8 +69,31 @@ loadSound("victory", "audio/victory.mp3");
 // gasp sound
 loadSound("gasp", "audio/gasp.wav");
 
+scene('welcome', ({
+}) => {
+    add([text('Welcome to Rockstar Run!\n\nPress space to continue', 15), origin('center'), pos(width() / 2, height() / 2)]);
 
 
+    keyPress("space", () => {
+        go("instructions", {
+            score: 0,
+            level: 0,
+        });
+    });
+});
+
+scene('instructions', ({
+}) => {
+    add([text('Instructions\n\n\n\nUse left and right arrows to move\n\n\nUse the spacebar to jump\n\n\n\nPress space to play', 15), origin('center'), pos(width() / 2, height() / 2)]);
+
+
+    keyPress("space", () => {
+        go("game", {
+            score: 0,
+            level: 0,
+        });
+    });
+});
 
 // Game render settings
 scene("game", ({
@@ -178,8 +201,8 @@ scene("game", ({
 
     // the displayed score in game 
     const scoreText = add([
-        text(score),
-        pos(30, 200),
+        text("Score: " + score),
+        pos(35, 25),
         layer('ui'),
         {
             value: score,
@@ -368,12 +391,12 @@ scene("game", ({
 scene('win', ({
     score
 }) => {
-    add([text('Winner! You scored ' + score + '.\n\nPress space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
+    add([text('Winner!\n\nYou scored ' + score + '.\n\nPress space to play again', 15), origin('center'), pos(width() / 2, height() / 2)]);
 
 
     // restarts the game after win
     keyPress("space", () => {
-        go("game", {
+        go("welcome", {
             score: 0,
             level: 0,
         });
@@ -386,6 +409,7 @@ scene('win', ({
 scene('lose', ({
     score
 }) => {
+
     // Game over image
     add([
         sprite('lose'),
@@ -414,7 +438,7 @@ scene('lose', ({
 });
 
 // guess what this does?
-start("game", {
+start("welcome", {
     score: 0,
     level: 0,
 
