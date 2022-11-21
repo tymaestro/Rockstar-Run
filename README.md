@@ -11,27 +11,16 @@ You can find the deployed version [here](https://tymaestro.github.io/Rockstar-Ru
 
 ## Project Goals
 
-- 
+- Create a platform game where users can interact with various sprites including bonuses and enemies
 
-- 
+- Have an endgame so users can have a goal and complete the game
 
-
-## Wireframes
-
-ADD WIREFRAMES HERE!!!
-
+- Have audio to represent the musical nature of this project
 
 
 ## Agile Methodology
 
-The agile development of this project used issues in the project environment on [Github](ADD LINK TO USER STORIES HERE!!!)
-
-## Features
-
-
-
-## Features Left To Implement
-
+The agile development of this project used issues in the project environment on [Github](https://github.com/users/tymaestro/projects/4/views/1)
 
 
 ## Languages Used
@@ -46,43 +35,15 @@ HTML
 
 Github was used for version control to store commit history.
 
-Balsamiq was used for wireframes.
-
 Kaboom.js
 
-## Testing
-
-### Validator Testing
-
-<hr>
-
-### HTML Validation
-
-
-<hr>
-
-### CSS Validation
-
-
-<hr>
-
-
-<br>
-
-
-## Bug Fixes
-
-- 
-
-- 
-
-- 
-
-- 
 
 ## Deployment
 
+- The site was deployed to Github Pages through the following steps:
+In the Github repository, select the Main (Master) branch in the settings tab
 
+- Having selected the Main (Master) branch, the project will be deployed and will be active in the Github pages section.
 
 ## Credits
 
